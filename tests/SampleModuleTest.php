@@ -5,6 +5,9 @@ class SampleModuleTest extends PHPUnit_Extensions_Selenium2TestCase
     /** Url du site  */
     protected $_site_url = 'http://localhost/prestashop/';
 
+    /** Versions cibles du module ( 1.4 | 1.5 | 1.6 | ALL ) */
+    protected $_targeted_versions = 'ALL';
+
     /**
      * Initialisation de la classe de test
      */
@@ -24,7 +27,7 @@ class SampleModuleTest extends PHPUnit_Extensions_Selenium2TestCase
     {
 
         //On charge l'url du controller front Office du module
-        $this->url('prestashop_'.$version.'/index.php?fc=module&module=samplemodule&controller=sample');
+        $this->url($version.'/index.php?fc=module&module=samplemodule&controller=sample');
 
         //Si vous voulez visualiser ce que le navigateur vois
         $image = $this->currentScreenshot();
@@ -41,12 +44,26 @@ class SampleModuleTest extends PHPUnit_Extensions_Selenium2TestCase
      */
     public function getPrestashopVersions()
     {
-         return array(
-                array('1-5-6-3'),
-                array('1-6-0-14'),
-                array('1-6-1-1'),
-        );
+        $prestashop_dir = dirname(__FILE__).'/../../../';
+        $dir            = opendir($prestashop_dir);
 
+        $versions = array();
+
+        //Récupération de toutes les versions prestashop installées
+        while ($item = readdir($dir)) {
+            if (is_dir($prestashop_dir.$item) && preg_match('#prestashop#',$item)) {
+                //En fonction des paramètres du module on inclus seulement les version cibles
+                if ($this->_targeted_versions != 'ALL') {
+                    if (preg_match('#'.str_replace('.', '-', $this->_targeted_versions).'#', $item))
+                            $versions[] = array($item);
+                }
+                // Si on cible toutes les versions on inclus tout
+                else {
+                    $versions[] = array($item);
+                }
+            }
+        }
+        
+       return $versions;
     }
-
 }
