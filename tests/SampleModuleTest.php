@@ -39,8 +39,8 @@ class SampleModuleTest extends PHPUnit_Extensions_Selenium2TestCase
 
 
     /**
-     * Récupération des version de prestashop installée pour les tests
-     * @todo Récupérer automatiquement les versions de prestashop installées
+     * Récupération des versions de prestashop installées sur l'infrastructure
+     * Et renvoi des versions ciblées par la variable $_targeted_versions
      */
     public function getPrestashopVersions()
     {
