@@ -8,9 +8,12 @@
  * @author Hhennes
  *
  */
+
+//Inclusion du modèle Sample
+require_once _PS_MODULE_DIR_ . '/samplemodule/classes/Sample.php';
+
 class SampleModule extends Module
 {
-
     public function __construct()
     {
         $this->author = 'hhennes';
@@ -49,7 +52,25 @@ class SampleModule extends Module
      */
     protected function _installSql()
     {
+        $sqlCreate = "CREATE TABLE `" . _DB_PREFIX_ . Sample::$definition['table'] . "` (
+                `id_sample` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                `name` varchar(255) DEFAULT NULL,
+                `code` varchar(255) DEFAULT NULL,
+                `email` varchar(255) DEFAULT NULL,
+                `date_add` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+                `date_upd` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+                PRIMARY KEY (`id_sample`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 
+        $sqlCreateLang = "CREATE TABLE `" . _DB_PREFIX_ . Sample::$definition['table'] . "_lang` (
+              `id_sample` int(11) unsigned NOT NULL AUTO_INCREMENT,
+              `id_lang` int(11) NOT NULL,
+              `title` varchar(255) DEFAULT NULL,
+              `description` text,
+              PRIMARY KEY (`id_sample`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+
+        return Db::getInstance()->execute($sqlCreate) && Db::getInstance()->execute($sqlCreateLang);
     }
 
     /**
@@ -101,8 +122,7 @@ class SampleModule extends Module
      */
     protected function _uninstallSql()
     {
-        $sql = "DROP TABLE hh_sample,hh_sample_lang";
+        $sql = "DROP TABLE ".Sample::$definition['table'].",".Sample::$definition['table']."_lang";
         return Db::getInstance()->execute($sql);
     }
-
 }
