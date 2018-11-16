@@ -25,12 +25,13 @@ class AdminHhSampleController extends ModuleAdminController
      */
     public function __construct()
     {
-        $this->bootstrap = true;
+        $this->bootstrap = true; //Gestion de l'affichage en mode bootstrap
         $this->table = Sample::$definition['table']; //Table de l'objet
         $this->identifier = Sample::$definition['primary']; //Clé primaire de l'objet
         $this->className = Sample::class; //Classe de l'objet
         $this->lang = true; //Flag pour dire si utilisation de langues ou non
 
+        //Appel de la fonction parente pour pouvoir utiliser la traduction ensuite
         parent::__construct();
 
         //Liste des champs de l'objet à afficher dans la liste
@@ -75,7 +76,7 @@ class AdminHhSampleController extends ModuleAdminController
         $this->fields_form = [
             //Entête
             'legend' => [
-                'title' => $this->l('Edit Distributor'),
+                'title' => $this->module->l('Edit Sample'),
                 'icon' => 'icon-cog'
             ],
             //Champs
@@ -92,25 +93,25 @@ class AdminHhSampleController extends ModuleAdminController
                 ],
                 [
                     'type' => 'text',
-                    'label' => $this->l('code'),
+                    'label' => $this->module->l('code'),
                     'name' => 'code',
                     'class' => 'input fixed-width-sm',
                     'size' => 5,
                     'required' => true,
-                    'empty_message' => $this->l('Please fill the code'),
+                    'empty_message' => $this->module->l('Please fill the code'),
                 ],
                 [
                     'type' => 'text',
-                    'label' => $this->l('email'),
+                    'label' => $this->module->l('email'),
                     'name' => 'email',
                     'class' => 'input fixed-width-sm',
                     'size' => 5,
                     'required' => true,
-                    'empty_message' => $this->l('Please fill email'),
+                    'empty_message' => $this->module->l('Please fill email'),
                 ],
                 [
                     'type' => 'text',
-                    'label' => $this->l('Title'),
+                    'label' => $this->module->l('Title'),
                     'name' => 'title',
                     'class' => 'input fixed-width-sm',
                     'lang' => true, //Flag pour utilisation des langues
@@ -119,16 +120,15 @@ class AdminHhSampleController extends ModuleAdminController
                 ],
                 [
                     'type' => 'textarea',
-                    'label' => $this->l('Title'),
-                    'name' => 'title',
-                    'class' => 'input fixed-width-sm',
+                    'label' => $this->module->l('Title'),
+                    'name' => 'description',
                     'lang' => true,
                     'autoload_rte' => true, //Flag pour éditeur Wysiwyg
                 ],
             ],
             //Boutton de soumission
             'submit' => [
-                'title' => $this->l('Save'),
+                'title' => $this->l('Save'), //On garde volontairement la traduction de l'admin par défaut
             ]
         ];
         return parent::renderForm();

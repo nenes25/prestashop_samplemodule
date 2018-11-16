@@ -47,7 +47,7 @@ class SampleModule extends Module
     }
 
     /**
-     * Création de la base de donnée
+     * Création de la base de donnée de l'objet
      * @return boolean
      */
     protected function _installSql()
