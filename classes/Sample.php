@@ -18,6 +18,7 @@ class Sample extends ObjectModel
 {
 
     public $id;
+    public $name;
     public $code;
     public $email;
     public $title;

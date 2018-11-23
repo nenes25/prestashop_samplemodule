@@ -120,7 +120,7 @@ class AdminHhSampleController extends ModuleAdminController
                 ],
                 [
                     'type' => 'textarea',
-                    'label' => $this->module->l('Title'),
+                    'label' => $this->module->l('Description'),
                     'name' => 'description',
                     'lang' => true,
                     'autoload_rte' => true, //Flag pour éditeur Wysiwyg

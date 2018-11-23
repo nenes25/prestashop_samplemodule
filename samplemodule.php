@@ -67,7 +67,7 @@ class SampleModule extends Module
               `id_lang` int(11) NOT NULL,
               `title` varchar(255) DEFAULT NULL,
               `description` text,
-              PRIMARY KEY (`id_sample`)
+              PRIMARY KEY (`id_sample`,`id_lang`)
             ) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 
         return Db::getInstance()->execute($sqlCreate) && Db::getInstance()->execute($sqlCreateLang);
@@ -122,7 +122,7 @@ class SampleModule extends Module
      */
     protected function _uninstallSql()
     {
-        $sql = "DROP TABLE ".Sample::$definition['table'].",".Sample::$definition['table']."_lang";
+        $sql = "DROP TABLE "._DB_PREFIX_.Sample::$definition['table'].","._DB_PREFIX_.Sample::$definition['table']."_lang";
         return Db::getInstance()->execute($sql);
     }
 }
