@@ -63,6 +63,23 @@ class AdminHhSampleController extends ModuleAdminController
         //Ajout d'action sur chaque ligne
         $this->addRowAction('edit');
         $this->addRowAction('delete');
+
+        /**
+         * Ajout d'actions de masses
+         */
+        $this->bulk_actions = [
+            'delete' => [
+                'text' => $this->l('Delete selected'),
+                'icon' => 'icon-trash',
+                'confirm' => $this->l('Delete selected items?')
+            ],
+            'status' =>[
+                'text' => $this->l('Delete selected'),
+                'icon' => 'icon-trash',
+                'confirm' => $this->l('Delete selected items?')
+            ],
+        ];
+
     }
 
     /**
@@ -136,18 +153,59 @@ class AdminHhSampleController extends ModuleAdminController
 
 
     /**
-     * Gestion de la toolbar
+     * General / Gestion de la toolbar / Gestion des boutons de la toolbar
      */
     public function initPageHeaderToolbar()
     {
 
-        //Bouton d'ajout
+        //Bouton d'ajout ( standard )
         $this->page_header_toolbar_btn['new'] = array(
             'href' => self::$currentIndex . '&add' . $this->table . '&token=' . $this->token,
             'desc' => $this->module->l('Add new Sample'),
             'icon' => 'process-icon-new'
         );
 
+        //Ajout d'un bouton qui appelle une fonction du controller
+        //La fonction appellée sera process{Action} => donc ProcessCustom
+        $this->page_header_toolbar_btn['custom_button'] = array(
+            'href' => self::$currentIndex . '&token=' . $this->token.'&action=custom',
+            'desc' => $this->module->l('Custom button'),
+            'icon' => 'process-icon-configure'
+        );
+
         parent::initPageHeaderToolbar();
+    }
+
+    /**
+     * General / Gestion de la toolbar / Gestion du titre
+     * Affichage d'un titre personnalisé
+     */
+    public function initToolbarTitle()
+    {
+        parent::initToolbarTitle();
+
+        switch ($this->display) {
+            case '':
+            case 'list':
+                array_pop($this->toolbar_title);
+                $this->toolbar_title[] = $this->module->l('Custom Title for sample listing');
+                break;
+            case 'add':
+            case 'edit':
+                array_pop($this->toolbar_title);
+                if (($sample = $this->loadObject(true)) && Validate::isLoadedObject($sample)) {
+                    $this->toolbar_title[] = sprintf($this->module->l('Editing sample %s'),$sample->name);
+                } else {
+                    $this->toolbar_title[] = $this->module->l('Creating a new sample');
+                }
+                break;
+        }
+    }
+
+    /**
+     * Action spécifique pour le controller
+     */
+    public function processCustom(){
+       dump('custom Action called by the button toolbar');
     }
 }
