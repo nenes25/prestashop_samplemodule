@@ -2,7 +2,9 @@
 /**
  * Sample Prestashop Module
  *
- * @author Hhennes
+ * Module declaration
+ *
+ * @author Hhennes - https://www.h-hennes.fr/blog/
  *
  */
 class samplemodule extends Module
