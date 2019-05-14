@@ -1,11 +1,10 @@
 <?php
-
 /**
  * Sample Prestashop Module
  *
- * Module de démonstration des différents principes prestashop
+ * Module declaration
  *
- * @author Hhennes
+ * @author Hhennes - https://www.h-hennes.fr/blog/
  *
  */
 
