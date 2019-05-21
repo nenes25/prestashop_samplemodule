@@ -330,4 +330,18 @@ class AdminHhSampleController extends ModuleAdminController
     {
         dump('custom Action called by the button toolbar');
     }
+
+    /**
+     * Règle de validation spécifique au controller
+     * Appellée dans la fonction validateRules de l'adminController
+     */
+    protected function _childValidation()
+    {
+        //Règle de validation custom à mettre en place
+        if ( $this->object){
+            if ( strlen($this->object->name) < 3 ){
+                $this->errors[] = $this->l('Name need more than 3 characters');
+            }
+        }
+    }
 }
