@@ -65,6 +65,14 @@ class AdminHhSampleController extends ModuleAdminController
         $this->addRowAction('delete');
 
         /**
+         * Gestion des images
+         */
+        $this->fieldImageSettings = array(
+            'name' => 'image', //Nom du champ dans le formulaire
+            'dir' => 'sample' //Nom du dossier dans le dossier img/
+        );
+
+        /**
          * Ajout d'actions de masses
          */
         $this->bulk_actions = [
@@ -258,10 +266,18 @@ class AdminHhSampleController extends ModuleAdminController
                 ],
                 [
                     'type' => 'textarea',
-                    'label' => $this->module->l('Title'),
+                    'label' => $this->module->l('Description'),
                     'name' => 'description',
                     'lang' => true,
                     'autoload_rte' => true, //Flag pour éditeur Wysiwyg
+                ],
+                // Champ Custom pour gérer une image via les méthode prestashop
+                // Ce champ n'existe pas en base de données
+                [
+                    'type' => 'file',
+                    'label' => $this->module->l('Image for sample'),
+                    'name' => 'image', //Nom du champ renseigné dans $this->fieldImageSettings['name']
+                    'hint' => $this->module->l('Image managed with prestashop admincontroller default behaviour')
                 ],
             ],
             //Boutton de soumission
@@ -278,7 +294,6 @@ class AdminHhSampleController extends ModuleAdminController
      */
     public function initPageHeaderToolbar()
     {
-
         //Bouton d'ajout ( standard )
         $this->page_header_toolbar_btn['new'] = array(
             'href' => self::$currentIndex . '&add' . $this->table . '&token=' . $this->token,
@@ -324,14 +339,6 @@ class AdminHhSampleController extends ModuleAdminController
     }
 
     /**
-     * Action spécifique pour le controller
-     */
-    public function processCustom()
-    {
-        dump('custom Action called by the button toolbar');
-    }
-
-    /**
      * Règle de validation spécifique au controller
      * Appellée dans la fonction validateRules de l'adminController
      */
@@ -344,4 +351,22 @@ class AdminHhSampleController extends ModuleAdminController
             }
         }
     }
+
+    /**
+     * Action spécifique pour le controller
+     */
+    public function processCustom()
+    {
+        dump('custom Action called by the button toolbar');
+    }
+
+    /**
+     * Action Ajax spécifique pour le controller
+     * @todo Gérer l'appel
+     */
+    public function displayAjaxCustomAction()
+    {
+
+    }
+
 }
