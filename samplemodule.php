@@ -17,6 +17,7 @@ class samplemodule extends Module
         $this->tab = 'hhennes';
         $this->version = '0.1.0';
         $this->need_instance = 0;
+        $this->controllers = ['sample'];
 
         parent::__construct();
 
