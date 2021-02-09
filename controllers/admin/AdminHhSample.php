@@ -25,6 +25,28 @@ class AdminHhSampleController extends ModuleAdminController
         $this->className = Sample::class; //Classe de l'objet
         $this->lang = true; //Flag pour dire si utilisation de langues ou non
 
+        /**
+         * Ajout d'actions de masses
+         */
+        $this->bulk_actions = [
+            'delete' => [ //L'action delete est native il n'y a pas de code supplémentaire à mettre en place
+                'text' => $this->l('Delete selected'), // Texte affiché dans l'action de masse
+                'icon' => 'icon-trash', //Icone d'affichage
+                'confirm' => $this->l('Delete selected items?') //Text de confirmation
+            ],
+            'status' => [ //L'action status
+                'text' => $this->l('Delete selected'),
+                'icon' => 'icon-trash',
+                'confirm' => $this->l('Delete selected items?')
+            ],
+            'status' => [ //Action custom
+                'text' => $this->l('Delete selected'),
+                'icon' => 'icon-trash',
+                'confirm' => $this->l('Delete selected items?')
+            ],
+        ];
+
+
         //Appel de la fonction parente pour pouvoir utiliser la traduction ensuite
         parent::__construct();
 
